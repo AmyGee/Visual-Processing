@@ -53,7 +53,7 @@ def run_variational(fname, save = False, save_name = None):
 
     #Make the sampling the input
     z = Lambda(sampling, output_shape=(latent_dim,))([z_mean, z_log_sigma]) #Lambda wraps an arbitrary expression as a layer, so here we are wrapping the sampling (latent space) as our input layer
-
+    #Error for z/mul_1 here! (after changing batch size to 50)
     #Map the latent points to reconstructued inputs
 
     decoder_h = Dense(intermediate_dim, activation='relu')
@@ -100,13 +100,12 @@ def run_variational(fname, save = False, save_name = None):
     x_test = x_test.astype('float32') / 255.
     print (x_test.shape)
 
-    #TODO: figure out where to initialise these parameters (Keras example + Beren)
 
     vae.fit(x_train, x_train,
             shuffle=True,
             epochs=epochs,
             batch_size=batch_size,
-            validation_data= (x_test, x_test))
+            validation_data= (x_test, x_test)) #Error of incompatible shapes points to here
 
     x_test_encoded = encoder.predict(x_test, batch_size=batch_size)
 
