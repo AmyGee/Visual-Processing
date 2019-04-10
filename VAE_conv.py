@@ -197,8 +197,7 @@ def vae_model(fname, save=True, save_name = None , verbose = True):
 	if save:
 		save_array((x_test, predictions), save_name + '_imgs_preds')
 
-
-#split out the losses into functions. This seems to have worked so far!
+#Need to define losses here because it wasn't working trying to define them in the vae_model definition
 def reconstruction_loss(y, x_decoded):
 	#let's hard code this for now
 	rows = 8
